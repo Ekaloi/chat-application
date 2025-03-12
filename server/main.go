@@ -62,7 +62,6 @@ func handleClient(conn net.Conn) {
 
 		mutex.Lock()
 		idMessage := fmt.Sprintf("%s: %s", clients[conn].name, msg)
-		fmt.Println(clients[conn].name + "hey")
 		for client := range clients {
 			if client != conn {
 				client.Write([]byte(idMessage))
@@ -100,7 +99,9 @@ func handleMessage(message string, conn net.Conn) error {
 		if m[0] == "/setuser" {
 			//There is new line at the end of m[1]
 			client.name = m[1][:len(m[1])-1]
+			return fmt.Errorf("user set %s\n", client.name)
 		}
+
 	}
 	return nil
 }
